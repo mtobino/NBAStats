@@ -4,52 +4,26 @@ const requestOptions = {
     redirect: "follow",
   };
 
-// var pageIndex = 1
-// const playerSet = new Set();
-// const playerList = Array.from(getAllPlayerNames());
-// /**
-//  * Update the Player Name set to contain all of the players that the database page has
-//  * 
-//  * @param {*} jsonData 
-//  */
-// function updatePlayerSet(jsonData)
-// {
-//   let data = JSON.parse(jsonData);
-//   for(let i = 0; i < data.results.length; i++)
-//   {
-//     let playerName = data.results[i].name;
-//     playerSet.add(playerName);
-//   }
-// }
-
-
-
-// /**
-//  * Function to get all the Player names stored in the player data section of the API
-//  */
-// function getAllPlayerNames(){
-//  do{
-//   fetch("https://nba-stats-db.herokuapp.com/api/playerdata/?page=" + pageIndex,
-//   requestOptions)
-//     .then(response => response.text())
-//     .then(result => updatePlayerSet(result))
-//     .catch((error) => {
-//       console.log("Error:", error);
-//     });
-//     pageIndex++;
-//   }while(pageIndex <= 60);
-//   console.log(playerSet);
-//   return playerSet;
-// }
-
 const urlLink = "https://nba-stats-db.herokuapp.com/api/playerdata/?page=";
 
+/**
+ * Get the JSON data from the given URL
+ * 
+ * @param {*} url       The url the data needed is from 
+ * @param {*} pageIndex What page the data will be on
+ * @returns             The data needed
+ */
 async function getData(url,pageIndex)
 {
     const response = await fetch(url + pageIndex, requestOptions)
     return response.json()
 }
-
+/**
+ * Gets all of the data from all of the pages
+ * 
+ * @param {*} url   the starting url 
+ * @returns         all JSON data stored into an array
+ */
 async function getAllData(url)
 {
     let dataArray = new Array();
@@ -63,6 +37,12 @@ async function getAllData(url)
     return dataArray
 }
 
+/**
+ * Gets all of the player names available from the API
+ * 
+ * @param {*} startingUrl   the start point 
+ * @returns                 a set containing exactly one copy of each name the API provided
+ */
 async function getAllPlayers(startingUrl)
 {
     let playerSet = new Set();
