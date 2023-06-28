@@ -2,6 +2,10 @@ import Player from "./Player.js";
 var main = document.querySelector(".maincontent");
 var playerDoc = document.createElement("article");
 
+/**
+ * Update the player information with the new player
+ * @param {*Player} player 
+ */
 function playerDisplayHTML(player) {
   playerDoc.classList.add("player");
   playerDoc.setAttribute("id", player.id);
@@ -100,17 +104,32 @@ const requestOptions = {
   method: "GET",
   redirect: "follow",
 };
-// Create a new form element
+
+// get all of the NBA Player names from the API
 const searchForm = document.createElement("form");
 searchForm.classList.add(`search`);
 
 // Populate form with an input and a button
 searchForm.innerHTML = `
   <input type="text" class="PlayerName" placeholder="Enter Player Name"/>
-  <input type ="number" class="PlayerSeason" placeholder="Enter Player's Season"/>
+  <select class="PlayerSeason" placeholder="Choose a Season">
+    <option value=2023>2023</option>
+    <option value=2022>2022</option>
+    <option value=2021>2021</option>
+    <option value=2020>2020</option>
+    <option value=2019>2019</option>
+    <option value=2018>2018</option>
+    <option value=2017>2017</option>
+    <option value=2016>2016</option>
+    <option value=2015>2015</option>
+    <option value=2014>2014</option>
+    <option value=2013>2013</option>
+    <option value=2012>2012</option>
+    <option value=2011>2011</option>
+    <option value=2010>2010</option>
+  </select>
   <button>Search</button>
 `;
-
 // Add event listener to the form submit action
 searchForm.addEventListener("submit", (e) => {
   // Stop form from reloading the page
@@ -177,14 +196,12 @@ searchForm.addEventListener("submit", (e) => {
 
       // create a player who has the name and season year provided
       player = new Player(playerInfo.results[seasonIndex]);
-      console.log(player);
-      console.log(playerInfo.results[seasonIndex]);
       playerDisplayHTML(player);
     })
     //if not gotten, print error
     .catch((error) => {
       playerDoc.innerText = "Error: website connection failed";
-      console.log("error", error);
+      console.log("Error:", error);
     });
 });
 
